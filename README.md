@@ -1,5 +1,18 @@
 # Shorts Multiuploader
 
+## Windows web app
+
+Run the Korean local dashboard from PowerShell 7:
+
+```powershell
+.\Start-Multiuploader.ps1
+```
+
+Open `http://127.0.0.1:8765` to configure your channel, connect accounts, select
+videos, preview final text, and inspect job history. To enable the reviewed
+publish action, start with `-EnablePublishing`. See the
+[web app guide (Korean)](docs/WEB_APP_GUIDE.md) for the complete workflow.
+
 A reusable, code-first pipeline for cross-posting your own YouTube Shorts to
 Instagram, Threads, TikTok, LinkedIn, Facebook, and Naver Clip.
 

@@ -494,7 +494,13 @@ def run_batch(
     dry_run: bool = False,
     do_verify: bool = True,
     headless: bool | None = None,
+    prepared_videos: list[dict] | None = None,
 ) -> dict:
+    # The local dashboard passes its reviewed snapshot here. Never rediscover or
+    # download between a user's preview and publish confirmation.
+    if prepared_videos is not None:
+        if not video_ids or {p["youtube_id"] for p in prepared_videos} != set(video_ids):
+            raise ValueError("Prepared snapshot does not match selected video IDs.")
     run_id, run_dir = _new_run_dir(cfg)
     target_platforms = (
         [normalize_platform_id(p) for p in platforms] if platforms else list(cfg.target_platforms)
@@ -527,10 +533,13 @@ def run_batch(
     prepare_failures: dict[str, str] = {}
     for video_id in selected_ids:
         try:
-            prepared = prepare_video(cfg, video_id)
-            upload_path, codec_note = ensure_h264(Path(prepared["file_path"]))
-            prepared["upload_file_path"] = str(upload_path)
-            prepared["codec_note"] = codec_note
+            if prepared_videos is None:
+                prepared = prepare_video(cfg, video_id)
+                upload_path, codec_note = ensure_h264(Path(prepared["file_path"]))
+                prepared["upload_file_path"] = str(upload_path)
+                prepared["codec_note"] = codec_note
+            else:
+                prepared = next(p.copy() for p in prepared_videos if p["youtube_id"] == video_id)
             prepared_by_id[video_id] = prepared
         except Exception as exc:  # yt-dlp/ffmpeg 실패
             prepare_failures[video_id] = str(exc)[:300]
@@ -636,7 +645,8 @@ def _build_report(
     *,
     dry_run: bool,
 ) -> dict:
-    attention = [] if dry_run else [c for c in cells if c.needs_agent()]
+    # Preparation failures must remain visible as failures in a dry run too.
+    attention = [c for c in cells if c.needs_agent()]
     exit_code = 0 if not attention else 3
     return {
         "run_id": run_id,
@@ -648,7 +658,9 @@ def _build_report(
             {
                 "youtube_id": p["youtube_id"],
                 "title": p["title"],
+                "title_text": p["title_text"],
                 "upload_date": p.get("upload_date"),
+                "timestamp": p.get("timestamp"),
                 "file": p.get("upload_file_path") or p["file_path"],
                 "codec": p.get("codec_note", p.get("video_codec", "")),
                 "post_text": p["post_text"],

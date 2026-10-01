@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="app-token" content="__APP_TOKEN__">
+  <title>멀티업로더 · 내 영상의 다음 목적지</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/style.css"><script defer src="/app.js"></script>
+</head>
+<body>
+<aside class="sidebar">
+  <a class="brand" href="/" aria-label="멀티업로더 홈"><span class="brand-mark">↗</span><span>멀티업로더<small>CREATOR WORKSPACE</small></span></a>
+  <div class="nav-label">WORKSPACE</div>
+  <nav aria-label="메인 메뉴">
+    <button class="nav active" data-view="distribute"><span>▦</span> 배포 작업 <i>01</i></button>
+    <button class="nav" data-view="settings"><span>⚙</span> 계정 및 설정 <i>02</i></button>
+    <button class="nav" data-view="history"><span>◷</span> 작업 기록 <i>03</i></button>
+    <button class="nav" data-view="guide"><span>?</span> 사용 가이드 <i>04</i></button>
+  </nav>
+  <div class="sidebar-note"><span class="live-dot"></span> 내 PC에서 실행 중<p>영상, 설정, 계정 연결을<br>이 컴퓨터에서 관리합니다.</p><code>127.0.0.1</code></div>
+</aside>
+<main>
+  <header class="topbar"><span id="page-label">배포 작업</span><div><span class="badge" id="mode">준비 모드</span><span class="local">WINDOWS LOCAL</span></div></header>
+  <div id="notice" class="notice" role="status" hidden></div>
+  <section id="view-distribute" class="view">
+    <div class="page-heading"><div><div class="eyebrow">ONE VIDEO, MORE POSSIBILITIES</div><h1>내 영상의 다음 목적지.</h1><p>YouTube Shorts를 준비하고, 원하는 채널로 배포하세요.</p></div><button class="button secondary" id="doctor">↻ 환경 점검</button></div>
+    <div class="summary-grid"><div><span>선택한 영상</span><strong id="selected-count">0<small>편</small></strong></div><div><span>대상 플랫폼</span><strong id="target-count">0<small>곳</small></strong></div><div><span>예상 배포 셀</span><strong id="cell-count">0<small>개</small></strong></div><div class="summary-note"><span>WORKFLOW</span><p>영상 선택 <b>→</b> 미리보기 <b>→</b> 배포</p><small>선택한 영상은 오래된 순서로 배포합니다.</small></div></div>
+    <div class="work-grid">
+      <div>
+        <section class="panel"><div class="panel-heading"><div><span class="step">01</span><h2>영상 선택</h2></div><button class="button secondary small" id="discover">채널 영상 불러오기</button></div>
+          <div id="source-caption" class="subtle">계정 및 설정에서 YouTube 채널을 먼저 저장하세요.</div>
+          <div id="videos" class="video-list"><div class="empty-state"><span class="empty-icon">▷</span><h3>배포할 영상을 골라보세요</h3><p>채널 영상을 불러오거나 YouTube 영상 ID를 입력하세요.</p></div></div>
+          <div class="manual"><label for="video-ids">직접 영상 ID 입력</label><div><input id="video-ids" placeholder="11자리 영상 ID, 여러 개는 쉼표로 구분" autocomplete="off"><button class="button secondary small" id="apply-ids">적용</button></div><small>예: youtube.com/shorts/ 뒤의 11자리 ID</small></div>
+        </section>
+        <section class="panel preview-panel"><div class="panel-heading"><div><span class="step">03</span><h2>게시 미리보기</h2></div><span class="badge muted" id="preview-label">준비 전</span></div><div id="preview"><div class="compact-empty">영상을 선택하고 ‘미리보기 만들기’를 누르면 최종 문구와 플랫폼별 결과가 표시됩니다.</div></div></section>
+      </div>
+      <div>
+        <section class="panel"><div class="panel-heading"><div><span class="step">02</span><h2>배포 플랫폼</h2></div></div><div id="targets" class="targets"></div><button class="text-button" data-view="settings">계정 연결 및 플랫폼 설정 ↗</button><div class="divider"></div><button class="button primary wide" id="preview-button">미리보기 만들기 <span>→</span></button><p class="button-help">영상 준비 · 코덱 확인 · 게시 문구 검토</p><button class="button dark wide" id="publish-button" disabled>검토한 영상 배포</button><p class="button-help" id="publish-help">준비 모드 · 미리보기까지 사용할 수 있습니다.</p></section>
+        <section class="panel job-panel"><div class="panel-heading"><h2>진행 상태</h2><span class="badge muted" id="job-status">대기</span></div><p id="job-message" class="subtle">작업을 시작하면 진행 상황이 표시됩니다.</p><div id="doctor-result"></div><div class="job-actions"><button class="button secondary small" id="login-complete" hidden>로그인 완료</button><button class="button danger small" id="cancel-job" hidden>작업 중단</button></div><details><summary>실행 로그</summary><pre id="job-log">아직 실행한 작업이 없습니다.</pre></details></section>
+      </div>
+    </div>
+  </section>
+  <section id="view-settings" class="view" hidden>
+    <div class="page-heading"><div><div class="eyebrow">YOUR CHANNELS</div><h1>계정 및 설정</h1><p>내 채널과 연결할 플랫폼을 설정하세요.</p></div></div>
+    <form id="settings-form">
+      <section class="panel"><div class="panel-heading"><h2>YouTube 및 배포 설정</h2><span class="badge muted">로컬 저장</span></div><div class="form-grid">
+        <label>YouTube 채널<input name="YOUTUBE_HANDLE" placeholder="@내채널 또는 YouTube 채널 URL" required></label>
+        <label>제목 언어<input name="YOUTUBE_METADATA_LANG" placeholder="ko, en, ja"></label>
+        <label>게시 문구<select name="POST_TEXT_MODE"><option value="caption">제목 + 해시태그</option><option value="title">제목만</option></select></label>
+        <label>기본 선택 수<input name="SHORTS_UPLOAD_LIMIT" type="number" min="1" max="20"></label>
+        <label>채널 조회 범위<input name="SHORTS_LOOKBACK_LIMIT" type="number" min="1" max="200"></label>
+        <label>광고 의심 영상<select name="SHORTS_SKIP_ADS"><option value="true">목록에서 제외</option><option value="false">목록에 포함</option></select></label>
+        <label>로그인 프로필<select name="PROFILE_STRATEGY"><option value="per-platform">플랫폼별 분리</option><option value="shared">모든 플랫폼 공유</option></select></label>
+        <label>콘텐츠 정책 파일<input name="CONTENT_POLICIES_FILE" placeholder="선택: config/content-policies.json"></label>
+      </div></section>
+      <section class="panel"><div class="panel-heading"><h2>대상 플랫폼과 계정 연결</h2></div><p class="subtle">사용할 플랫폼을 체크하고 저장하세요. ‘로그인 연결’은 전용 Chrome 창을 엽니다.</p><div id="account-fields" class="account-grid"></div></section>
+      <div class="save-bar"><span id="save-state">설정은 이 PC의 .env에 저장됩니다.</span><button type="submit" class="button primary">설정 저장 →</button></div>
+    </form>
+  </section>
+  <section id="view-history" class="view" hidden>
+    <div class="page-heading"><div><div class="eyebrow">EVERY DESTINATION, TRACKED</div><h1>작업 기록</h1><p>작업 결과와 영상별 배포 상태를 확인하세요.</p></div><button class="button secondary" id="refresh-history">↻ 새로고침</button></div>
+    <section class="panel"><div class="panel-heading"><h2>최근 작업</h2></div><div id="job-history"></div></section>
+    <section class="panel"><div class="panel-heading"><h2>게시 기록</h2><button class="button secondary small" id="verify">검증 대기 확인</button></div><div id="upload-history" class="table-wrap"></div></section>
+  </section>
+  <section id="view-guide" class="view" hidden>
+    <div class="page-heading"><div><div class="eyebrow">GET STARTED</div><h1>처음부터, 차근차근.</h1><p>Windows에서 브라우저로 사용하는 멀티업로더입니다.</p></div></div>
+    <section class="panel guide"><h2>사용 순서</h2><ol><li><b>채널과 플랫폼 저장</b><p>계정 및 설정에서 본인 YouTube 채널, 대상 플랫폼, 계정 핸들과 검증 URL을 입력합니다.</p></li><li><b>플랫폼에 로그인</b><p>플랫폼의 ‘로그인 연결’을 누르고 Chrome에서 로그인합니다. 돌아와 ‘로그인 완료’를 누르세요.</p></li><li><b>환경 점검 및 영상 선택</b><p>환경 점검을 실행한 뒤 채널 영상을 불러옵니다. 처음에는 2편을 선택하세요.</p></li><li><b>미리보기 검토</b><p>미리보기를 만들고 영상 순서, 최종 문구, 정책상 제외된 플랫폼을 확인합니다.</p></li><li><b>배포와 결과 확인</b><p>게시 모드로 시작한 경우, 검토 확인 후 배포할 수 있습니다. 작업 기록에서 결과를 확인하세요.</p></li></ol><h2>앱 시작</h2><p>PowerShell 7에서 프로젝트 폴더를 연 후 실행합니다.</p><pre>.\Start-Multiuploader.ps1</pre><p>게시 버튼을 사용하려면 게시 모드로 시작합니다.</p><pre>.\Start-Multiuploader.ps1 -EnablePublishing</pre><p>주소는 <code>http://127.0.0.1:8765</code>입니다. 앱을 종료하려면 실행한 터미널에서 <code>Ctrl+C</code>를 누르세요.</p><h2>작업 결과 읽기</h2><p>‘게시됨’은 게시 증거가 있고 추가 검증이 남은 상태입니다. ‘검증 완료’는 검증이 끝난 상태입니다. ‘확인 필요’는 계정 연결이나 플랫폼 화면을 확인하세요. 이전 게시 시도는 자동으로 반복하지 않습니다.</p></section>
+  </section>
+  <footer>MULTIUPLOADER <span>내 콘텐츠를, 더 많은 곳에.</span></footer>
+</main>
+<dialog id="publish-dialog"><form method="dialog"><div class="eyebrow">READY TO DISTRIBUTE</div><h2>검토한 영상 배포</h2><p id="publish-summary"></p><p>미리보기의 영상·문구·대상 계정을 확인한 후 실행하세요.</p><label class="check-label"><input type="checkbox" id="review-confirm"> 최종 문구와 대상 계정을 확인했습니다.</label><label>확인 문구<input id="publish-confirm" placeholder="게시" autocomplete="off"></label><div class="dialog-actions"><button class="button secondary" value="cancel">돌아가기</button><button type="button" class="button primary" id="confirm-publish">배포 시작 →</button></div></form></dialog>
+</body>
+</html>

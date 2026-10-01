@@ -12,6 +12,7 @@ dependencies = [
 
 [project.scripts]
 shorts-dist = "shorts_distributor.main:main"
+shorts-web = "shorts_distributor.web:main"
 
 [build-system]
 requires = ["hatchling"]

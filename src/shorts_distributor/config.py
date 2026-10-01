@@ -8,9 +8,9 @@ from dotenv import load_dotenv
 
 from .platforms import parse_platform_list
 
-load_dotenv()
-
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
+load_dotenv(PROJECT_ROOT / ".env")
+
 DATA_DIR = PROJECT_ROOT / "data"
 DOWNLOAD_DIR = DATA_DIR / "downloads"
 PROFILES_DIR = DATA_DIR / "profiles"

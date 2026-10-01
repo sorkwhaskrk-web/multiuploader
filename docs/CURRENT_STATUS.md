@@ -14,6 +14,8 @@
 | LICENSE SHA-256 | `1DD75A3D6AE5EBCF35BB297EBCA563B957335DB6DAE90BE86A8EDF5374048312` |
 | 대상 | `sorkwhaskrk-web/multiuploader` |
 | 대상 초기 상태 | 이미 존재하는 빈 PUBLIC 저장소, 기본 브랜치 없음 |
+| 대상 현재 기본 브랜치 | `feature/windows-bootstrap-audit` |
+| 대상 `main` | 없음 |
 | 로컬 작업 브랜치 | `feature/windows-bootstrap-audit` |
 
 복제 직후 로컬 `HEAD`의 커밋과 tree는 원본 `upstream/main`과 동일했다. 따라서
@@ -28,7 +30,8 @@
 - 대상 저장소는 PUBLIC이다. 운영 비밀이나 로컬 산출물을 절대 커밋하면 안 된다.
 - 원본의 `.github/workflows/test.yml`은 모든 `push`와 `pull_request`에 반응한다.
   이번 단계에서는 GitHub Actions를 실행하지 않는다.
-- 초기 확인 시 대상 저장소의 Actions 실행 이력은 0건이었다.
+- 기능 브랜치 푸시 후 원격 커밋과 tree가 로컬과 일치했고, 원본 기준 커밋이 원격 브랜치의 조상임을 확인했다.
+- 푸시 후에도 대상 저장소의 Actions 실행 이력은 0건이었다.
 
 ## 원본에서 확인한 기능
 

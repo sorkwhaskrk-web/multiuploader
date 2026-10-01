@@ -205,3 +205,9 @@ Security guidance is in [SECURITY.md](SECURITY.md).
 ## License
 
 [MIT](LICENSE)
+
+## Windows bootstrap documents
+
+- [Project brief](docs/PROJECT_BRIEF.md)
+- [Current status and audit](docs/CURRENT_STATUS.md)
+- [Windows operations guide](docs/WINDOWS_OPERATIONS.md)
